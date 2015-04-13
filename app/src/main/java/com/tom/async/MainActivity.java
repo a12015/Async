@@ -20,7 +20,8 @@ public class MainActivity extends Activity {
 
     public void go(View v){
 //        new Job1().execute();
-        new Job2().execute(3);
+//        new Job2().execute(3);
+        new Job3().execute(5);
     }
 
     class Job1 extends AsyncTask<Void, Void, Void>{
@@ -69,7 +70,7 @@ public class MainActivity extends Activity {
         protected Void doInBackground(Integer... params) {
             int n = params[0];
             for (int i =0 ; i<n; i++){
-
+                publishProgress(i+1);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -79,6 +80,19 @@ public class MainActivity extends Activity {
             return null;
         }
 
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            int value = values[0];
+            TextView info = (TextView) findViewById(R.id.info);
+            info.setText(value+"");
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            TextView info = (TextView) findViewById(R.id.info);
+            info.setText("DONE");
+        }
     }
 
     @Override
